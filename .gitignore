@@ -1,2 +1,6 @@
 /back/node_modules
 /back/.env.local
+
+/front/node_modules
+/front/.env.local
+
