@@ -39,3 +39,28 @@ export const login = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { id} = req.body;
+    const user = await authService.findUserById(id);
+    if (!user) return res.status(404).json({ error: "Utilisateur introuvable" });
+    await authService.deleteUserById(id);
+    res.json({ message: "Utilisateur supprimé" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const { id, nom, prenom, email, password } = req.body;
+    const user = await authService.findUserById(id);
+    if (!user) return res.status(404).json({ error: "Utilisateur introuvable" });
+
+    const updatedUser = await authService.updateUser(id, { nom, prenom, email, password });
+    res.json({ message: "Utilisateur mis à jour", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
