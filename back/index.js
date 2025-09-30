@@ -16,5 +16,10 @@ app.use("/api/posts", postRoutes);
 app.use("/api/types", typeRoutes);
 
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(` Serveur OK`));
+// N'écoutez le port que si ce n'est pas un test
+if (process.env.NODE_ENV !== 'test') {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log(` Serveur OK`));
+}
+
+export { app };
