@@ -26,6 +26,8 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+
+    console.log(email);
     const user = await authService.findUserByEmail(email);
     if (!user) return res.status(404).json({ error: "Utilisateur introuvable" });
 

@@ -3,10 +3,11 @@ import db from "../config/bd.js";
 export const createUser = async ( nom, prenom, email, password) => {
     const inserUser = "INSERT INTO users (nom, prenom, email, password, roleId) VALUES (?, ?, ?, ?, 1)";
     const [result] = await db.query(inserUser,[nom, prenom, email, password]);
-    return { id: result.insertId, nom, prenom, email, roleId};
+    return { id: result.insertId};
 };
 
 export const findUserByEmail = async (email) => {
+    console.log(email);
     const findUser = "SELECT * FROM users WHERE email = ?";
     const [rows] = await db.query(findUser, [email]);
     return rows[0];
