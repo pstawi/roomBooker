@@ -1,10 +1,9 @@
 import db from "../config/bd.js";
 
-export const createUser = async ( nom, prenom, email, password, roleId ) => {
-    console.log("Creating user:", { nom, prenom, email, roleId });
-    const inserUser = "INSERT INTO users (nom, prenom, email, password, roleId) VALUES (?, ?, ?, ?, ?)";
-    const [result] = await db.query(inserUser,[nom, prenom, email, password, roleId]);
-    return { id: result.insertId, nom, prenom, email, roleId };
+export const createUser = async ( nom, prenom, email, password) => {
+    const inserUser = "INSERT INTO users (nom, prenom, email, password, roleId) VALUES (?, ?, ?, ?, 1)";
+    const [result] = await db.query(inserUser,[nom, prenom, email, password]);
+    return { id: result.insertId, nom, prenom, email, roleId};
 };
 
 export const findUserByEmail = async (email) => {

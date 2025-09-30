@@ -5,7 +5,7 @@ import * as authService from "../services/authService.js";
 export const register = async (req, res) => {
   try {
     console.log(req.body.nom);
-    const { nom, prenom, email, password, roleId } = req.body;
+    const { nom, prenom, email, password} = req.body;
     if (!nom || !prenom || !email || !password) {
       return res.status(400).json({ error: "champ manquant" });
     }
@@ -14,7 +14,7 @@ export const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await authService.createUser(nom, prenom, email, hashedPassword, roleId);
+    const user = await authService.createUser(nom, prenom, email, hashedPassword);
 
     res.status(201).json({ message: "Utilisateur créé", user });
   } catch (error) {
