@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import CreatePost from "./views/CreatePost";
 import PostDetails from "./views/PostDetails";
 import EditPost from "./views/EditPost";
+import CGU from "./views/CGU";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "/edit-post/:id",
                 element: <EditPost />
+            },
+            {
+                path: "/CGU",
+                element: <CGU />
             }
         ]
     }
