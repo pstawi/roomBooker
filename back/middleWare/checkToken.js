@@ -12,3 +12,4 @@ export const checkToken = (req, res, next) => {
     next();
   });
 };
+export default checkToken;
