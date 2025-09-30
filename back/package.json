@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "��#\u0000 \u0000r\u0000o\u0000o\u0000m\u0000B\u0000o\u0000o\u0000k\u0000e\u0000r\u0000\r\u0000 \u0000",
   "main": "index.js",
-  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
@@ -26,6 +25,7 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
     "mysql2": "^3.15.1"
   },
   "devDependencies": {
