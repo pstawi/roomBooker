@@ -60,8 +60,25 @@ const PostDetails = () => {
                         style={{ backgroundImage: `url(http://localhost:5000${post.image})` }}
                     />
                 )}
-                
                 <div className="p-6">
+                    {/* Bouton Google Agenda si type = 'event' */}
+                    {post.type && post.type.toLowerCase().includes('event') && (
+                        (() => {
+                            const start = post.dateDebut ? new Date(post.dateDebut).toISOString().replace(/[-:]|\.\d{3}/g, '').slice(0, 15) : '';
+                            const end = post.dateFin ? new Date(post.dateFin).toISOString().replace(/[-:]|\.\d{3}/g, '').slice(0, 15) : '';
+                            const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(post.libelle)}&dates=${start}/${end}&details=${encodeURIComponent(post.description || '')}&location=${encodeURIComponent(post.lieu || '')}`;
+                            return (
+                                <a
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                                >
+                                    Ajouter à Google Agenda
+                                </a>
+                            );
+                        })()
+                    )}
                     <div className="flex justify-between items-start mb-6">
                         <div>
                             <span className={`inline-block ${
