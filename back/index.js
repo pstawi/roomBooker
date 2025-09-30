@@ -10,14 +10,14 @@ const app = express();
 
 app.use(cors());
 
-app.use(express.json());
+
 app.use('/uploads', express.static('uploads'));
 
 // Routes
-app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
+app.use(express.json());
+app.use("/api/auth", authRoutes);
 app.use("/api/types", typeRoutes);
-
 
 // N'écoutez le port que si ce n'est pas un test
 if (process.env.NODE_ENV !== 'test') {

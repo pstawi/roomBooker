@@ -1,7 +1,7 @@
 import express from "express";
 import * as postController from "../controllers/postController.js";
-import checkToken from "../middleWare/checkToken.js";
-import upload from "../middleWare/uploadMiddleware.js";
+import checkToken from "../middleware/checkToken.js";
+import upload from "../middleware/upload.js";
 
 const router = express.Router();
 
