@@ -42,7 +42,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex-grow py-12 bg-gray-50">
+        <div className="flex-grow py-12 ">
             <div className="max-w-md mx-auto space-y-8 p-8 bg-white rounded-lg shadow-md">
                 {/* En-tête avec les boutons de switch */}
                 <div className="flex justify-center space-x-4 border-b border-gray-200">

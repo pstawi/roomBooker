@@ -2,7 +2,7 @@ const CreatePostCard = ({ onClick }) => {
     return (
         <div 
             onClick={onClick}
-            className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer bg-gradient-to-br from-indigo-500 to-purple-600"
+            className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer bg-gradient-to-br bg-indigo-800"
             style={{ minHeight: '300px' }}
         >
             <div className="absolute inset-0 flex items-center justify-center">

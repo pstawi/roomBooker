@@ -92,7 +92,7 @@ const PostDetails = () => {
                         {currentUserId === post.userId && (
                             <button
                                 onClick={() => navigate(`/edit-post/${post.id}`)}
-                                className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                                className="bg-indigo-800 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors"
                             >
                                 Modifier
                             </button>

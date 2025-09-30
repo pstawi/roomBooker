@@ -48,13 +48,13 @@ const Home = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-8">
-                Réservations disponibles
+            <h1 className="text-3xl text-center font-bold text-gray-900 mb-8">
+                Actualités
             </h1>
             
             {posts.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
-                    Aucune réservation disponible pour le moment
+                <div className="text-center py-8 text-gray-500 ">
+                    Aucune actualité disponible pour le moment
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

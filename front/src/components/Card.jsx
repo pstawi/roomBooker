@@ -17,7 +17,7 @@ const Card = ({ post, onDelete }) => {
             'event': 'bg-blue-600',
             'bon plan': 'bg-green-600'
         };
-        return colors[type] || 'bg-indigo-600';
+        return colors[type] || 'bg-indigo-800';
     };
 
     const handleEdit = () => {
@@ -43,19 +43,28 @@ const Card = ({ post, onDelete }) => {
     } : {};
 
     return (
-        <div 
+        <div
             onClick={() => navigate(`/posts/${post.id}`)}
             className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer"
             style={{ minHeight: '300px' }}
         >
-            {/* Overlay de couleur pour la lisibilité */}
-            <div 
-                className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"
-                style={cardStyle}
+            {/* Image de fond */}
+            <div
+                className="absolute inset-0"
+                style={{ ...cardStyle, zIndex: 0 }}
             />
-            
+            {/* Overlay filtre par défaut (ex: brightness) */}
+            <div
+                className="absolute inset-0"
+                style={{ zIndex: 1, background: 'rgba(0,0,0,0)', filter: 'brightness(0.7)' }}
+            />
+            {/* Overlay dégradé pour la lisibilité */}
+            <div
+                className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"
+                style={{ zIndex: 2 }}
+            />
             {/* Contenu */}
-            <div className="relative h-full p-6 flex flex-col justify-between">
+            <div className="relative h-full p-6 flex flex-col justify-between" style={{ zIndex: 3 }}>
                 {/* En-tête */}
                 <div className="flex justify-between items-start">
                     <div>

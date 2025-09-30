@@ -224,7 +224,7 @@ const CreatePost = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className={`bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors ${
+                            className={`bg-indigo-800 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors ${
                                 loading ? 'opacity-50 cursor-not-allowed' : ''
                             }`}
                         >

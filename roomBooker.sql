@@ -37,6 +37,10 @@ CREATE TABLE IF NOT EXISTS `types` (
   UNIQUE KEY `libelle` (`libelle`)
   );
 
+  INSERT INTO `types` (`id`, `libelle`) VALUES
+(1, 'event'),
+(2, 'bon plan');
+
 
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
