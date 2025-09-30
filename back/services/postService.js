@@ -22,7 +22,7 @@ export const findPostById = async (id) => {
     return rows[0];
 };
 
-export const updatePostById = async (postId, libelle, typeId, dateDebut, dateFin, lieu, description, image) => {
+export const updatePostById = async (libelle, typeId, dateDebut, dateFin, lieu, description, image, postId) => {
     const updatePost = `UPDATE posts SET libelle = ?, typeId = ?, dateDebut = ?, dateFin = ?, lieu = ?, description = ?, image = ? WHERE id = ?`;
     await db.query(updatePost, [libelle, typeId, dateDebut, dateFin, lieu, description, image, postId]);
 };

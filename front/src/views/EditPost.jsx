@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPostById, updatePost } from '../services/PostServices';
 import { getCurrentUserId } from '../utils/auth';
+import { getAllTypes } from '../services/TypeServices';
 
 const EditPost = () => {
     const { id } = useParams();
@@ -9,10 +10,10 @@ const EditPost = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const currentUserId = getCurrentUserId();
-    
+    const [types, setTypes] = useState([]);
     const [formData, setFormData] = useState({
         lieu: '',
-        type: 'event',
+        typeId: '',
         description: '',
         libelle: '',
         dateDebut: '',
@@ -20,17 +21,19 @@ const EditPost = () => {
     });
 
     useEffect(() => {
-        const fetchPost = async () => {
+        const fetchTypesAndPost = async () => {
             try {
+                const typesData = await getAllTypes();
+                setTypes(typesData);
                 const post = await getPostById(id);
-                
-                // Vérifier si l'utilisateur est autorisé à modifier ce post
                 if (post.userId !== currentUserId) {
                     setError("Vous n'êtes pas autorisé à modifier ce post");
                     setLoading(false);
                     return;
                 }
-
+                // Trouver le typeId correspondant au type (libellé)
+                const foundType = typesData.find(t => t.libelle === post.type);
+                const typeId = foundType ? foundType.id : '';
                 // Formater les dates pour l'input datetime-local
                 const formatDateForInput = (dateString) => {
                     const date = new Date(dateString);
@@ -39,7 +42,7 @@ const EditPost = () => {
 
                 setFormData({
                     lieu: post.lieu,
-                    type: post.type,
+                    typeId: typeId,
                     libelle: post.libelle,
                     description: post.description,
                     dateDebut: formatDateForInput(post.dateDebut),
@@ -53,17 +56,33 @@ const EditPost = () => {
             }
         };
 
-        fetchPost();
+        fetchTypesAndPost();
     }, [id, currentUserId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setError(null);
         try {
-            await updatePost(id, formData);
+            const formDataToSend = new FormData();
+            for (const [key, value] of Object.entries(formData)) {
+                if (key === 'image' && value) {
+                    formDataToSend.append('image', value); // value doit être un File si modifié
+                } else if (value !== null && value !== undefined) {
+                    formDataToSend.append(key, value);
+                }
+            }
+            // Debug : afficher le contenu du FormData
+            for (let pair of formDataToSend.entries()) {
+                console.log(pair[0]+ ':', pair[1]);
+            }
+            await updatePost(id, formDataToSend);
             navigate(`/posts/${id}`);
         } catch (err) {
             console.error('Erreur lors de la mise à jour:', err);
             setError('Une erreur est survenue lors de la mise à jour du post');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -131,18 +150,19 @@ const EditPost = () => {
                     </div>
 
                     <div>
-                        <label htmlFor="type" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="typeId" className="block text-sm font-medium text-gray-700">
                             Type
                         </label>
                         <select
-                            id="type"
-                            name="type"
-                            value={formData.type}
+                            id="typeId"
+                            name="typeId"
+                            value={formData.typeId}
                             onChange={handleChange}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         >
-                            <option value="event">Événement</option>
-                            <option value="bon plan">Bon plan</option>
+                            {types.map(type => (
+                                <option key={type.id} value={type.id}>{type.libelle}</option>
+                            ))}
                         </select>
                     </div>
 

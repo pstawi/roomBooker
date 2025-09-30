@@ -64,7 +64,10 @@ export const updatePost = async (req, res) => {
     try {
         const postId = req.params.id;
         const userId = req.user.id;
-        const { libelle, typeId, dateDebut, dateFin, lieu, description, image } = req.body;
+        // On récupère les champs du body
+        const { libelle, typeId, dateDebut, dateFin, lieu, description } = req.body;
+        // On récupère le chemin de la nouvelle image si uploadée
+        const imagePath = req.file ? `/uploads/${req.file.filename}` : req.body.image || null;
 
         const post = await postService.findPostById(postId);
         if (!post) {
@@ -75,11 +78,25 @@ export const updatePost = async (req, res) => {
             return res.status(403).json({ error: "Non autorisé à modifier ce post" });
         }
 
-        await postService.updatePostById(libelle, postId, typeId, dateDebut, dateFin, lieu, description, image);
+        // Si aucune nouvelle image n'est envoyée, on garde l'ancienne
+        const imageToSave = req.file ? imagePath : post.image;
+
+        // Correction de l'ordre des paramètres pour updatePostById
+        await postService.updatePostById(
+            libelle,
+            typeId,
+            dateDebut,
+            dateFin,
+            lieu,
+            description,
+            imageToSave,
+            postId
+        );
         const updatedPost = await postService.findPostById(postId);
         res.json({ message: "Post mis à jour", post: updatedPost });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        console.error('Erreur update post:', error);
+        res.status(500).json({ error: error.message });
     }
 };
 
