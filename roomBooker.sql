@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   lieu varchar(255),
   description text,
   image varchar(255),
+  libelle varchar(255),
   PRIMARY KEY (`id`),
   KEY `typeId` (`typeId`),
   KEY `userId` (`userId`)
