@@ -3,32 +3,42 @@ import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 import CreatePostCard from '../components/CreatePostCard';
 import { getAllPosts } from '../services/PostServices';
+import { useAuth } from '../hooks/AuthContext';
+
 
 const Home = () => {
     const navigate = useNavigate();
+    const { isAuthenticated, loading: authLoading } = useAuth();
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    // Redirection si non authentifié
+    useEffect(() => {
+        if (!authLoading && !isAuthenticated) {
+            navigate('/Login');
+        }
+    }, [authLoading, isAuthenticated, navigate]);
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const data = await getAllPosts();
-                // S'assurer que posts est un tableau
-                const postsArray = Array.isArray(data) ? data : [];
-                setPosts(postsArray);
-                setLoading(false);
-            } catch (err) {
-                console.error('Erreur lors du chargement des posts:', err);
-                setError('Une erreur est survenue lors du chargement des posts');
-                setLoading(false);
-            }
-        };
+        if (!authLoading && isAuthenticated) {
+            const fetchPosts = async () => {
+                try {
+                    const data = await getAllPosts();
+                    // S'assurer que posts est un tableau
+                    const postsArray = Array.isArray(data) ? data : [];
+                    setPosts(postsArray);
+                    setLoading(false);
+                } catch (err) {
+                    console.error('Erreur lors du chargement des posts:', err);
+                    setError('Une erreur est survenue lors du chargement des posts');
+                    setLoading(false);
+                }
+            };
+            fetchPosts();
+        }
+    }, [authLoading, isAuthenticated]);
 
-        fetchPosts();
-    }, []);
-
-    if (loading) {
+    if (loading || authLoading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
