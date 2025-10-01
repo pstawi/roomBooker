@@ -1,16 +1,58 @@
-# React + Vite
+# Documentation du Frontend – RoomBooker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Structure du projet
 
-Currently, two official plugins are available:
+```
+front/
+├── public/           # Fichiers statiques (images, SVG, etc.)
+├── src/
+│   ├── assets/       # Images et icônes utilisées dans l'app
+│   ├── components/   # Composants réutilisables (Card, LoginForm, etc.)
+│   ├── hooks/        # Hooks personnalisés (AuthContext, useAuth)
+│   ├── Layout/       # Composants de structure (Header, Footer, Layout)
+│   ├── routes/       # Définition des routes et protections (RequireAuth)
+│   ├── services/     # Fonctions d'appel API (AuthServices, PostServices, TypeServices)
+│   ├── utils/        # Fonctions utilitaires (auth, axios)
+│   ├── views/        # Pages principales (Home, Login, CreatePost, etc.)
+│   ├── index.css     # Styles globaux
+│   ├── main.jsx      # Point d'entrée React
+│   └── router.jsx    # Configuration du routeur
+├── index.html        # Fichier HTML principal
+├── package.json      # Dépendances et scripts
+└── vite.config.js    # Configuration Vite
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Principaux dossiers/fichiers
 
-## React Compiler
+- **components/** : Composants UI réutilisables.
+- **hooks/** : Gestion du contexte d’authentification et hooks personnalisés.
+- **Layout/** : Structure de la page (Header, Footer, Layout général).
+- **routes/** : Définition des routes, protection des routes privées.
+- **services/** : Fonctions pour communiquer avec l’API backend.
+- **utils/** : Fonctions utilitaires (authentification, configuration axios).
+- **views/** : Pages principales de l’application.
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Authentification
+- Utilisation d’un contexte (`AuthContext`) pour stocker l’état de l’utilisateur connecté.
+- Les routes privées sont protégées via le composant `RequireAuth`.
+- Les tokens sont stockés côté client (localStorage ou context).
 
-## Expanding the ESLint configuration
+## Appels API
+- Les services (`AuthServices.js`, `PostServices.js`, `TypeServices.js`) centralisent les appels HTTP vers le backend.
+- Utilisation d’axios pour les requêtes HTTP.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Navigation
+- Utilisation de React Router pour la navigation entre les pages.
+- Les routes sont définies dans `router.jsx` et protégées si besoin.
+
+## Lancement du projet
+
+1. Installer les dépendances :
+	```bash
+	cd front
+	npm install
+	```
+2. Lancer le serveur de développement :
+	```bash
+	npm run dev
+	```
