@@ -88,7 +88,6 @@ const PostDetails = () => {
                             </span>
                             <h1 className="text-3xl font-bold text-gray-900">{post.lieu}</h1>
                         </div>
-                        
                         {currentUserId === post.userId && (
                             <button
                                 onClick={() => navigate(`/edit-post/${post.id}`)}
@@ -100,7 +99,13 @@ const PostDetails = () => {
                     </div>
 
                     <div className="mb-6">
+                        <p className="text-gray-700 text-lg font-semibold">Titre</p>
                         <p className="text-gray-700 text-lg">{post.libelle}</p>
+                    </div>
+
+                    <div className="mb-6">
+                        <p className="text-gray-700 text-lg font-semibold">Description</p>
+                        <p className="text-gray-700">{post.description}</p>
                     </div>
 
                     <div className="border-t border-gray-200 pt-4">
